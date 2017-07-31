@@ -14,6 +14,11 @@ function preload() {
   plasticBottle = loadImage("plastic-water-bottle.jpg");
   sc = loadImage("girl.png");
   rc = loadImage("Recycling_Plant.png")
+  obs1 = loadImage("cat-call1.png")
+  obs2 = loadImage("cat-call2.png")
+  obs3 = loadImage("cat-call3.png")
+  obs4 = loadImage("cat-call4.png")
+  obs5 = loadImage("cat-call5.png")
 }
 
 function keyPressed() {
