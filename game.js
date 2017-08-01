@@ -5,18 +5,28 @@ var person;
 var rc;
 var logo;
 var jumps = 0;
-var obs1, obs2, obs3, obs4, obs5;
+var obs1, obs2, obs3, obs4, obs5, obs6, obs7;
 var score = 0;
 var recentColl = false;
 var money = 0.00;
 var plasticBottle;
 var monospace;
 var lost = false;
-
 var lives = 5;
-var heart ;
+var heart;
 var eheart;
 var offset;
+
+// var obs = [
+//
+// ]
+// obst1 = {
+//   obs1: 90 40
+// }
+//
+// obst2 = {
+//   obs2:
+// }
 
 function preload() {
   logo = loadImage("logo.png");
@@ -32,6 +42,8 @@ function preload() {
   obs3 = loadImage("cat-call3.png");
   obs4 = loadImage("cat-call4.png");
   obs5 = loadImage("cat-call5.png");
+  obs6 = loadImage("cat-call6.png")
+  obs7 = loadImage("cat-call7.png")
   eheart= loadImage("EmptyHeart23.png")
   heart = loadImage("heart23.png")
 }
@@ -72,6 +84,7 @@ function draw() {
       image(rc, 400, height/2, rc.width/4, rc.height/4);
     }
     if (lives == 0) {
+      lost = true;
       image(lose,0,0,845,350);
       return;
     }
@@ -80,35 +93,36 @@ function draw() {
     disBottle();
     makeBottle();
     showLives();
-    translate(-person.pos.x+50, 0);
 
+    translate(-person.pos.x+50, 0);
+    showBottles();
 
     image(rc, 6000, height/2, rc.width/4, rc.height/4);
 
 
     var gravity = createVector(0, 0.1);
     person.applyForce(gravity);
+
     if (person.pos.y == 350) {
       jumps =0;
 
     }
 
-     person.update();
-     person.edges();
-     person.display(sc);
-
-
+    person.update();
+    person.edges();
+    person.display(sc);
     display_obstacles();
+
 
   }
 }
 
 function showLives() {
-  image(heart, 0,0,30,30)
-  image(heart,29,0,30,30)
-  image(heart,58,0,30,30)
-  image(heart,88,0,30,30)
-  image(heart,118,0,30,30)
+  // image(heart, 0,0,30,30)
+  // image(heart,29,0,30,30)
+  // image(heart,58,0,30,30)
+  // image(heart,88,0,30,30)
+  // image(heart,118,0,30,30)
 
   if (lives < 1 ) {
     image(eheart, 0,0,30,30)
@@ -141,9 +155,6 @@ function showLives() {
 function clear(){
     background ("white");
 }
-function recycling(){
-
-}
 
 function drawBackground(offset){
     image(bg, offset, -140);
@@ -165,7 +176,7 @@ function dis_money() {
 
 function bottleCount() {
   console.log(score);
-  if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, height-50, 90, 40) ){
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
@@ -178,7 +189,7 @@ function bottleCount() {
 
 function moneyCount() {
   console.log(score);
-  if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, (height-50), 90, 40)) {
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
@@ -189,7 +200,7 @@ function moneyCount() {
 }
 
 function makeBottle() {
-   image(plasticBottle, 480, 0, 18, 58);
+   image(plasticBottle, 480, 0, 15, 58);
 }
 
 
@@ -204,11 +215,34 @@ function disBottle() {
 }
 
 function display_obstacles() {
-  var obstacles = [obs1, obs2, obs3, obs4, obs5];
-  obstacles.forEach(function(obs, index){
-    image(obs, 400*(index+1), height-50);
-    image(plasticBottle, 700*(index+2), 180,25,65);
-  })
+  var obstacles = [obs1, obs2, obs3, obs4, obs5, obs6, obs7];
+  var multiplier = 1;
+  for(var i = 0; i < 6; i++){
+    for(var j = 0; j < 7; j++){
+      image(obstacles[j], 400*(multiplier), height-50);
+      if (collideRectRect(400*multiplier, (height-50), obstacles[j].width, obstacles[j].height,person.pos.x, person.pos.y-65, 45, 65)) {
+        // image(lose,0,0,845,350);
+        if (recentColl == false){
+          recentColl = true;
+          console.log(recentColl)
+          lives--;
+          window.setTimeout(function(){recentColl = false; }, 1000);
+        }
+
+        // return;
+      }
+      multiplier++;
+    }
+  }
+}
+
+function showBottles() {
+  var index = 0;
+  while(index < 20) {
+    image(plasticBottle, 700*(index+2),height/2,plasticBottle.width/2,plasticBottle.height/2);
+    index++;
+  }
+
 }
 
 function scoreFrac() {
