@@ -2,6 +2,7 @@ var bg, sc;
 var y = 0;
 var gb;
 var person;
+var boy;
 var rc;
 var logo;
 var jumps = 0;
@@ -31,9 +32,14 @@ var offset;
 function preload() {
   logo = loadImage("logo.png");
   bg = loadImage("city-background.jpg");
+
   instructions = loadImage("instructions.png");
   plasticBottle = loadImage("waterbottle.png");
   sc = loadImage("girl.png");
+
+  sc = loadImage("original_45x65.png");
+  boy = loadImage("boy_45x65.png")
+
   rc = loadImage("Recycling_Plant.png")
   plasticBottle = loadImage("waterbottle.png");
   lose = loadImage("losescreen.png");
@@ -97,7 +103,8 @@ function draw() {
     translate(-person.pos.x+50, 0);
     showBottles();
 
-    image(rc, 6000, height/2, rc.width/4, rc.height/4);
+    image(boy, 6160, height-60);
+    image(rc, 6200, height/2, rc.width/4, rc.height/4);
 
 
     var gravity = createVector(0, 0.1);
