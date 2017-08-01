@@ -5,16 +5,15 @@ var person;
 var rc;
 var logo;
 var jumps = 0;
-var obs1, obs2, obs3, obs4, obs5;
+var obs1, obs2, obs3, obs4, obs5, obs6, obs7;
 var score = 0;
 var recentColl = false;
 var money = 0.00;
 var plasticBottle;
 var monospace;
 var lost = false;
-
 var lives = 5;
-var heart ;
+var heart;
 var eheart;
 var offset;
 
@@ -43,6 +42,8 @@ function preload() {
   obs3 = loadImage("cat-call3.png");
   obs4 = loadImage("cat-call4.png");
   obs5 = loadImage("cat-call5.png");
+  obs6 = loadImage("cat-call6.png")
+  obs7 = loadImage("cat-call7.png")
   eheart= loadImage("EmptyHeart23.png")
   heart = loadImage("heart23.png")
 }
@@ -81,17 +82,7 @@ function draw() {
     if (millis()>100000){
       image(rc, 400, height/2, rc.width/4, rc.height/4);
     }
-    if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y-65, 45, 65)) {
-      // image(lose,0,0,845,350);
-      if (recentColl == false){
-        recentColl = true;
-        console.log(recentColl)
-        lives--;
-        window.setTimeout(function(){recentColl = false; }, 1000);
-      }
 
-      // return;
-    }
     dis_money();
     bottleCount();
     disBottle();
@@ -106,17 +97,17 @@ function draw() {
 
     var gravity = createVector(0, 0.1);
     person.applyForce(gravity);
+
     if (person.pos.y == 350) {
       jumps =0;
 
     }
 
-     person.update();
-     person.edges();
-     person.display(sc);
-
-
+    person.update();
+    person.edges();
+    person.display(sc);
     display_obstacles();
+
 
   }
 }
@@ -223,10 +214,25 @@ function disBottle() {
 }
 
 function display_obstacles() {
-  var obstacles = [obs1, obs2, obs3, obs4, obs5];
-  obstacles.forEach(function(obs, index){
-    image(obs, 400*(index+1), height-50);
-  })
+  var obstacles = [obs1, obs2, obs3, obs4, obs5, obs6, obs7];
+  var multiplier = 1;
+  for(var i = 0; i < 6; i++){
+    for(var j = 0; j < 7; j++){
+      image(obstacles[j], 400*(multiplier), height-50);
+      if (collideRectRect(400*multiplier, (height-50), obstacles[j].width, obstacles[j].height,person.pos.x, person.pos.y-65, 45, 65)) {
+        // image(lose,0,0,845,350);
+        if (recentColl == false){
+          recentColl = true;
+          console.log(recentColl)
+          lives--;
+          window.setTimeout(function(){recentColl = false; }, 1000);
+        }
+
+        // return;
+      }
+      multiplier++;
+    }
+  }
 }
 
 function scoreFrac() {
