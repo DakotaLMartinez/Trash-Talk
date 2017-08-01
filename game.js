@@ -59,10 +59,11 @@ function draw() {
   if(millis()<=3000) {
     image(logo,0,0,845,350)
   }
-  else if (millis()<=6000) {
+  else if (millis()<=10000) {
     image(instructions,0,0,845,350);
   }
   else {
+    rectMode(CORNER);
     drawBackground(offset-=2);
     if (offset<=-width){
         offset=0;
@@ -70,7 +71,7 @@ function draw() {
     if (millis()>100000){
       image(rc, 400, height/2, rc.width/4, rc.height/4);
     }
-    if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
+    if (lives == 0) {
       image(lose,0,0,845,350);
       return;
     }
@@ -78,7 +79,6 @@ function draw() {
     bottleCount();
     disBottle();
     makeBottle();
-    makeBottlefloat();
     showLives();
     translate(-person.pos.x+50, 0);
 
@@ -188,15 +188,11 @@ function moneyCount() {
   }
 }
 
-
-
 function makeBottle() {
    image(plasticBottle, 480, 0, 18, 58);
 }
 
-function makeBottlefloat() {
-  image(plasticBottle, 480, 240, 25, 65);
-}
+
 
 function disBottle() {
   fill(20, 119, 180);
@@ -211,6 +207,7 @@ function display_obstacles() {
   var obstacles = [obs1, obs2, obs3, obs4, obs5];
   obstacles.forEach(function(obs, index){
     image(obs, 400*(index+1), height-50);
+    image(plasticBottle, 700*(index+2), 180,25,65);
   })
 }
 
