@@ -141,13 +141,11 @@ function showLives() {
 function clear(){
     background ("white");
 }
-function recycling(){
-
-}
 
 function drawBackground(offset){
     image(bg, offset, -140);
-    image(bg, offset+width, -140);
+    var i = image(bg, offset+width, -140);
+    console.log(i.x);
 }
 
 function dis_money() {
@@ -165,7 +163,7 @@ function dis_money() {
 
 function bottleCount() {
   console.log(score);
-  if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, height-50, 50, 50) ){
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
@@ -178,7 +176,7 @@ function bottleCount() {
 
 function moneyCount() {
   console.log(score);
-  if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, (height-50), 50, 50)) {
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
@@ -191,7 +189,7 @@ function moneyCount() {
 
 
 function makeBottle() {
-   image(plasticBottle, 480, 0, 18, 58);
+   image(plasticBottle, 480, 0, 15, 58);
 }
 
 function makeBottlefloat() {
