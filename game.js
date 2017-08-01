@@ -18,6 +18,17 @@ var heart ;
 var eheart;
 var offset;
 
+// var obs = [
+//
+// ]
+// obst1 = {
+//   obs1: 90 40
+// }
+//
+// obst2 = {
+//   obs2:
+// }
+
 function preload() {
   logo = loadImage("logo.png");
   bg = loadImage("city-background.jpg");
@@ -70,9 +81,16 @@ function draw() {
     if (millis()>100000){
       image(rc, 400, height/2, rc.width/4, rc.height/4);
     }
-    if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y, 42, 132)) {
-      image(lose,0,0,845,350);
-      return;
+    if (collideRectRect(400, (height-50), 50, 50,person.pos.x, person.pos.y-65, 45, 65)) {
+      // image(lose,0,0,845,350);
+      if (recentColl == false){
+        recentColl = true;
+        console.log(recentColl)
+        lives--;
+        window.setTimeout(function(){recentColl = false; }, 1000);
+      }
+
+      // return;
     }
     dis_money();
     bottleCount();
@@ -104,11 +122,11 @@ function draw() {
 }
 
 function showLives() {
-  image(heart, 0,0,30,30)
-  image(heart,29,0,30,30)
-  image(heart,58,0,30,30)
-  image(heart,88,0,30,30)
-  image(heart,118,0,30,30)
+  // image(heart, 0,0,30,30)
+  // image(heart,29,0,30,30)
+  // image(heart,58,0,30,30)
+  // image(heart,88,0,30,30)
+  // image(heart,118,0,30,30)
 
   if (lives < 1 ) {
     image(eheart, 0,0,30,30)
@@ -144,8 +162,7 @@ function clear(){
 
 function drawBackground(offset){
     image(bg, offset, -140);
-    var i = image(bg, offset+width, -140);
-    console.log(i.x);
+    image(bg, offset+width, -140);
 }
 
 function dis_money() {
@@ -163,7 +180,7 @@ function dis_money() {
 
 function bottleCount() {
   console.log(score);
-  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, height-50, 50, 50) ){
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, height-50, 90, 40) ){
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
@@ -176,7 +193,7 @@ function bottleCount() {
 
 function moneyCount() {
   console.log(score);
-  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, (height-50), 50, 50)) {
+  if (collideRectRect(person.pos.x, person.pos.y-65, 45, 65, 400, (height-50), 90, 40)) {
     if (recentColl == false){
       recentColl = true;
       console.log(recentColl)
