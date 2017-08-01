@@ -71,10 +71,11 @@ function draw() {
   if(millis()<=3000) {
     image(logo,0,0,845,350)
   }
-  else if (millis()<=6000) {
+  else if (millis()<=10000) {
     image(instructions,0,0,845,350);
   }
   else {
+    rectMode(CORNER);
     drawBackground(offset-=2);
     if (offset<=-width){
         offset=0;
@@ -82,15 +83,19 @@ function draw() {
     if (millis()>100000){
       image(rc, 400, height/2, rc.width/4, rc.height/4);
     }
-
+    if (lives == 0) {
+      lost = true;
+      image(lose,0,0,845,350);
+      return;
+    }
     dis_money();
     bottleCount();
     disBottle();
     makeBottle();
-    makeBottlefloat();
     showLives();
-    translate(-person.pos.x+50, 0);
 
+    translate(-person.pos.x+50, 0);
+    showBottles();
 
     image(rc, 6000, height/2, rc.width/4, rc.height/4);
 
@@ -194,15 +199,11 @@ function moneyCount() {
   }
 }
 
-
-
 function makeBottle() {
    image(plasticBottle, 480, 0, 15, 58);
 }
 
-function makeBottlefloat() {
-  image(plasticBottle, 480, 240, 25, 65);
-}
+
 
 function disBottle() {
   fill(20, 119, 180);
@@ -233,6 +234,15 @@ function display_obstacles() {
       multiplier++;
     }
   }
+}
+
+function showBottles() {
+  var index = 0;
+  while(index < 20) {
+    image(plasticBottle, 700*(index+2),height/2,plasticBottle.width/2,plasticBottle.height/2);
+    index++;
+  }
+
 }
 
 function scoreFrac() {
