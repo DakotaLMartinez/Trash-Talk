@@ -35,8 +35,6 @@ function preload() {
 
   instructions = loadImage("instructions.png");
   plasticBottle = loadImage("waterbottle.png");
-  sc = loadImage("girl.png");
-
   sc = loadImage("original_45x65.png");
   boy = loadImage("boy_45x65.png")
 
